@@ -148,8 +148,22 @@ export default function AdminDashboard() {
     setTimeout(() => setToast(''), 2500)
   }
 
-  const pagas = alunas.filter(a => a.pagamento_status === 'pago').length
-  const totalRecebido = pagas * 50 + alunas.filter(a => a.tipo === 'avulsa').length * 20
+  async function aprovarAluna(aluna) {
+    await supabase.from('profiles').update({ aprovada: true }).eq('id', aluna.id)
+    showToast('Aluna aprovada! ✓')
+    fetchAlunas()
+  }
+
+  async function recusarAluna(aluna) {
+    await supabase.from('profiles').delete().eq('id', aluna.id)
+    showToast('Cadastro removido.')
+    fetchAlunas()
+  }
+
+  const novas = alunas.filter(a => a.aprovada === false)
+  const ativas = alunas.filter(a => a.aprovada !== false)
+  const pagas = ativas.filter(a => a.pagamento_status === 'pago').length
+  const totalRecebido = pagas * 50 + ativas.filter(a => a.tipo === 'avulsa').length * 20
 
   return (
     <div>
@@ -192,6 +206,36 @@ export default function AdminDashboard() {
           </div>
         </div>
 
+        {/* Novas alunas aguardando aprovacao */}
+        {novas.length > 0 && (
+          <div style={{ marginBottom: 24 }}>
+            <div style={{ fontSize: 15, fontWeight: 600, marginBottom: 10, display: 'flex', alignItems: 'center', gap: 8 }}>
+              <span style={{ background: '#FAEEDA', color: '#854F0B', borderRadius: '50%', width: 22, height: 22, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: 12, fontWeight: 700 }}>{novas.length}</span>
+              Aguardando aprovação
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+              {novas.map(aluna => {
+                const av = avatarColor(aluna.nome)
+                return (
+                  <div key={aluna.id} className="card" style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '14px 16px', border: '1px solid #F0C978', background: '#FFFBF0' }}>
+                    <div className="avatar" style={{ background: av.bg, color: av.color }}>{initials(aluna.nome)}</div>
+                    <div style={{ flex: 1 }}>
+                      <div style={{ fontWeight: 600, fontSize: 14 }}>{aluna.nome}</div>
+                      <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>{aluna.email} · se cadastrou agora</div>
+                    </div>
+                    <button className="btn btn-green" style={{ padding: '6px 12px', fontSize: 13 }} onClick={() => aprovarAluna(aluna)}>
+                      ✓ Aprovar
+                    </button>
+                    <button className="btn btn-danger" style={{ padding: '6px 12px', fontSize: 13 }} onClick={() => recusarAluna(aluna)}>
+                      ✕
+                    </button>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+        )}
+
         {/* Alunas */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
           <h2 style={{ fontSize: 15, fontWeight: 600 }}>Alunas</h2>
@@ -202,13 +246,13 @@ export default function AdminDashboard() {
 
         {loading ? (
           <div className="loading">Carregando...</div>
-        ) : alunas.length === 0 ? (
+        ) : ativas.length === 0 ? (
           <div className="card" style={{ textAlign: 'center', color: 'var(--text-muted)', padding: 40 }}>
             Nenhuma aluna cadastrada ainda.
           </div>
         ) : (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-            {alunas.map(aluna => {
+            {ativas.map(aluna => {
               const av = avatarColor(aluna.nome)
               const isSelected = selectedAluna?.id === aluna.id
               return (

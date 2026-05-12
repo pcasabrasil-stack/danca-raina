@@ -50,6 +50,7 @@ export function AuthProvider({ children }) {
         role: 'aluna',
         tipo: 'mensalista',
         pagamento_status: 'pendente',
+        aprovada: false,
       })
     }
     return { error: null }
