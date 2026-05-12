@@ -3,7 +3,7 @@ import { supabase } from './supabase'
 import Topbar from './Topbar'
 
 const AVATAR_COLORS = [
-  { bg: '#FBEAF0', color: '#993556' },
+  { bg: '#EFF6FF', color: '#1D4ED8' },
   { bg: '#E1F5EE', color: '#0F6E56' },
   { bg: '#FAEEDA', color: '#854F0B' },
   { bg: '#E6F1FB', color: '#185FA5' },
@@ -170,7 +170,7 @@ export default function AdminDashboard() {
       <div className="page">
         {/* Header */}
         <div style={{ marginBottom: 20 }}>
-          <h1 style={{ fontSize: 22, fontWeight: 700 }}>Painel da professora</h1>
+          <h1 style={{ fontSize: 22, fontWeight: 700 }}>Painel do Admin</h1>
           <p style={{ color: 'var(--text-muted)', fontSize: 13, marginTop: 2 }}>
             {new Date().toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' })}
           </p>

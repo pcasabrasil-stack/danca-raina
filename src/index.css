@@ -1,10 +1,10 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --pink: #D4537E;
-  --pink-light: #FBEAF0;
-  --pink-mid: #ED93B1;
-  --pink-dark: #993556;
+  --pink: #2563EB;
+  --pink-light: #EFF6FF;
+  --pink-mid: #93C5FD;
+  --pink-dark: #1D4ED8;
   --green: #1D9E75;
   --green-light: #E1F5EE;
   --green-dark: #0F6E56;

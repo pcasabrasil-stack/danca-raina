@@ -23,7 +23,7 @@ export default function Login() {
         <div style={{ textAlign: 'center', marginBottom: 32 }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, marginBottom: 8 }}>
             <div style={{ width: 12, height: 12, borderRadius: '50%', background: 'var(--pink)' }} />
-            <span style={{ fontSize: 20, fontWeight: 700 }}>Dança Rainha</span>
+            <span style={{ fontSize: 20, fontWeight: 700 }}>Projeto Casa Brasil - Dança</span>
           </div>
           <p style={{ color: 'var(--text-muted)', fontSize: 14 }}>Faça login para continuar</p>
         </div>

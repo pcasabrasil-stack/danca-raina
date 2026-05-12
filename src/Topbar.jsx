@@ -7,7 +7,7 @@ export default function Topbar() {
     <div className="topbar">
       <div className="logo">
         <div className="logo-dot" />
-        Dança Rainha
+        Projeto Casa Brasil - Dança
       </div>
       <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
         {profile && (
