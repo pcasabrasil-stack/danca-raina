@@ -303,8 +303,22 @@ export default function AdminDashboard() {
                     <div style={{ background: '#fafafa', border: '1px solid var(--pink-mid)', borderTop: 'none', borderRadius: '0 0 var(--radius) var(--radius)', padding: '16px 18px' }}>
                       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px 24px', marginBottom: 14 }}>
                         <div>
-                          <div style={{ fontSize: 11, color: 'var(--text-muted)', marginBottom: 2 }}>Plano</div>
-                          <div style={{ fontSize: 14, fontWeight: 500, textTransform: 'capitalize' }}>{aluna.tipo}</div>
+                          <div style={{ fontSize: 11, color: 'var(--text-muted)', marginBottom: 6 }}>Plano</div>
+                          <select
+                            className="input"
+                            style={{ fontSize: 13, padding: '6px 10px' }}
+                            value={aluna.tipo || 'mensalista'}
+                            onChange={async e => {
+                              const novoTipo = e.target.value
+                              await supabase.from('profiles').update({ tipo: novoTipo }).eq('id', aluna.id)
+                              showToast('Plano atualizado! ✓')
+                              fetchAlunas()
+                              setSelectedAluna({ ...aluna, tipo: novoTipo })
+                            }}
+                          >
+                            <option value="mensalista">Mensalista ($50/mês)</option>
+                            <option value="avulsa">Avulsa ($20/aula)</option>
+                          </select>
                         </div>
                         <div>
                           <div style={{ fontSize: 11, color: 'var(--text-muted)', marginBottom: 2 }}>Status pagamento</div>
